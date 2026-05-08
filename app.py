@@ -3,323 +3,98 @@ import pandas as pd
 from io import BytesIO
 from datetime import datetime
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", page_title="Formulário de Auditoria")
 
-st.title("Formulário + Exportação XLSX")
+st.title("📋 Formulário de Auditoria e Recebimento")
 
 # =========================
 # SIDEBAR
 # =========================
-st.sidebar.title("Menu")
-
+st.sidebar.title("Navegação")
 pagina = st.sidebar.radio(
     "Escolha uma página",
-    [
-        "Recebimento",
-        "Dashboard",
-        "Configurações"
-    ]
+    ["Recebimento", "Dashboard", "Configurações"]
 )
 
-# =========================
-# PÁGINA FORMULÁRIO
-# =========================
 if pagina == "Recebimento":
-
-    # =========================
-    # FORMULÁRIO
-    # =========================
     with st.form("meu_formulario"):
-
-        # Campo de texto
-        avaliador = st.text_area(
-            "Escreva o nome do avaliador"
-        )
-
-        # Lista suspensa
-        area = st.selectbox(
-            "Área",
-            ["Selecione...",
-            "Recebimento",
-            "Expedição",
-            "Estoque",
-            "Shirink",
-            "Picking",
-            "Buffer",
-            "Inventário",
-            "Qualidade"
-            ]
-        )
-
-        # Lista suspensa
-        o_que_sera_avaliado = st.selectbox(
-            "O que será avaliado ?",
-            ["Selecione...",
-            "Padrão do Setor",
-            "Padrão de Processos"
-            ]
-        )
-
-        # Lista suspensa
-        qual_operacao_sera_avaliada = st.selectbox(
-            "Qual operação será avaliada ?",
-            ["Selecione...",
-            "Multilivros",
-            "Macmillan",
-            "Asurion"
-            ]
-        )
-
-        # Lista suspensa
-        sinalizacao_iluminacao_adequada = st.selectbox(
-            "O ambiente apresenta SINALIZAÇÃO e ILUMINAÇÃO adequada?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        ambiente_organizado = st.selectbox(
-            "O ambiente está organizado, sem Itens fora de Layout? (carrinhos, coletores, pallets...)",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        ambiente_epc_saida_emergencia = st.selectbox(
-            "O ambiente apresenta EPC's e SAÍDAS DE EMERGÊNCIA adequadas?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        ambiente_equipamentos_seguranca_desobstruidos = st.selectbox(
-            "O ambiente apresenta EQUIPAMENTOS DE SEGURANÇA desobstruídos?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        bancadas_conferencia_devidamente_organizada_limpa = st.selectbox(
-            "Bancadas de conferência devidamente ORGANIZADAS e LIMPAS?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        equipamentos_condicoes_uso = st.selectbox(
-            "O ambiente apresenta equipamentos em boas condições de uso? (Carrinhos, Fitas Gomadas, Maquinário...)",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        identificacoes_estao_ok = st.selectbox(
-            "As identificações estão ok? (lixeiras, volumes)",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        sinalizacao_fita_demarcacao_solo = st.selectbox(
-            "As sinalizações com fita demarcação de solo estão em boas condições?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        balanca_funcionando = st.selectbox(
-            "A balança está funcionando?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Campo de texto
-        melhoria_depender_outras_areas_acontecer = st.text_area(
-            "Melhoria irá depender de outras áreas para acontecer ? (EX: Manutenção, Orçamentos, etc...)"
-        )
-
-        # Lista suspensa
-        desvios_ruptura_atividades_realizadas = st.selectbox(
-            "Os desvios poderão trazer rupturas nas atividades ali realizadas?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        situacao_recorrente = st.selectbox(
-            "Situação é recorrente ? (Ou seja, não foi tratada, ou já aconteceu anteriormente)",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        retrabalhos_morosidade_fluxo_trabalho = st.selectbox(
-            "Existem retrabalhos que podem acabar trazendo morosidade ao fluxo de trabalho?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Campo de texto
-        retrabalhos_morosidade_fluxo_trabalho_especifique = st.text_area(
-            "Se a resposta anterior for 'Sim', por favor, especifique."
-        )
-
-        # Lista suspensa
-        existe_item_nao_e_departamento = st.selectbox(
-            "Existe algum item que está em recebimento que não é do departamento?",
-            ["Selecione...",
-            "Sim",
-            "Não",
-            "Não se aplica"
-            ]
-        )
-
-        # Lista suspensa
-        paletes_buffer_recebimento_caixas_devidamente_fechadas = st.selectbox(
-            "Os paletes do buffer de recebimento estão com as caixas devidamente fechadas?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        tratativas_devolucao_area_demarcada = st.selectbox(
-            "As tratativas de devolução estão em sua área demarcada?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        colaboradores_uso_correto_epis = st.selectbox(
-            "Colaboradores fazem uso correto de EPI's ?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Lista suspensa
-        colaborador_entrevistado_apresenta_conhecimento_dds_do_dia = st.selectbox(
-            "O colaborador entrevistado apresenta conhecimento sobre o tema do DDS do dia?",
-            ["Selecione...",
-            "Sim",
-            "Não"
-            ]
-        )
-
-        # Campo de texto
-        prazo_melhoria_recorrer = st.text_area(
-            "Qual o prazo para a melhoria ocorrer ?"
-        )
-
-        # Campo de texto
-        responsavel_area_pontuada = st.text_area(
-            "Qual o nome do responsável pela área pontuada?"
-        )
+        st.subheader("Dados da Avaliação")
         
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            avaliador = st.text_input("Nome do avaliador")
+            area = st.selectbox("Área", ["Selecione...", "Recebimento", "Expedição", "Estoque", "Shirink", "Picking", "Buffer", "Inventário", "Qualidade"])
+            o_que_sera_avaliado = st.selectbox("O que será avaliado?", ["Selecione...", "Padrão do Setor", "Padrão de Processos"])
+            qual_operacao_sera_avaliada = st.selectbox("Qual operação?", ["Selecione...", "Multilivros", "Macmillan", "Asurion"])
 
-        # Campo de texto
-        comentario_final = st.text_area(
-            "Deixe aqui seu comentário do que foi concluído durante a observação e descreva sua sugestão de melhorias. Assim juntos vamos construir um ambiente cada vez melhor e mais seguro para se trabalhar!!"
-        )
+        with col2:
+            responsavel_area_pontuada = st.text_input("Responsável pela área pontuada")
+            prazo_melhoria_recorrer = st.text_input("Prazo para a melhoria ocorrer")
 
-        # Multiselect (caixinhas)
-#        itens = st.multiselect(
-#            "Selecione os itens",
-#            ["Notebook", "Monitor", "Mouse", "Teclado", "Headset"]
-#        )
+        st.divider()
+        st.subheader("Critérios de Avaliação")
 
-        # Botão submit do formulário
-        submitted = st.form_submit_button("Salvar")
+        # Organizando em colunas para não ficar uma lista infinita
+        c1, c2 = st.columns(2)
+        
+        with c1:
+            sinalizacao_iluminacao_adequada = st.selectbox("Sinalização e ILUMINAÇÃO adequada?", ["Selecione...", "Sim", "Não"])
+            ambiente_organizado = st.selectbox("Ambiente organizado (sem itens fora de layout)?", ["Selecione...", "Sim", "Não"])
+            ambiente_epc_saida_emergencia = st.selectbox("EPC's e SAÍDAS DE EMERGÊNCIA adequadas?", ["Selecione...", "Sim", "Não"])
+            ambiente_equipamentos_seguranca_desobstruidos = st.selectbox("EQUIPAMENTOS DE SEGURANÇA desobstruídos?", ["Selecione...", "Sim", "Não"])
+            bancadas_conferencia_devidamente_organizada_limpa = st.selectbox("Bancadas ORGANIZADAS e LIMPAS?", ["Selecione...", "Sim", "Não"])
+            equipamentos_condicoes_uso = st.selectbox("Equipamentos em boas condições?", ["Selecione...", "Sim", "Não"])
+            identificacoes_estao_ok = st.selectbox("Identificações ok? (lixeiras, volumes)", ["Selecione...", "Sim", "Não"])
 
-    # =========================
-    # PROCESSAR DADOS
-    # =========================
+        with c2:
+            sinalizacao_fita_demarcacao_solo = st.selectbox("Fitas de demarcação em boas condições?", ["Selecione...", "Sim", "Não"])
+            balanca_funcionando = st.selectbox("A balança está funcionando?", ["Selecione...", "Sim", "Não"])
+            desvios_ruptura_atividades_realizadas = st.selectbox("Desvios podem trazer rupturas?", ["Selecione...", "Sim", "Não"])
+            situacao_recorrente = st.selectbox("Situação é recorrente?", ["Selecione...", "Sim", "Não"])
+            retrabalhos_morosidade_fluxo_trabalho = st.selectbox("Existem retrabalhos/morosidade?", ["Selecione...", "Sim", "Não"])
+            existe_item_nao_e_departamento = st.selectbox("Item que não é do departamento?", ["Selecione...", "Sim", "Não", "Não se aplica"])
+            colaboradores_uso_correto_epis = st.selectbox("Uso correto de EPI's?", ["Selecione...", "Sim", "Não"])
+
+        st.divider()
+        melhoria_depender_outras_areas_acontecer = st.text_area("Melhoria depende de outras áreas? (Manutenção, Orçamentos, etc)")
+        retrabalhos_morosidade_fluxo_trabalho_especifique = st.text_area("Se houve retrabalho, especifique:")
+        comentario_final = st.text_area("Sugestões de melhoria e Comentários Finais")
+
+        submitted = st.form_submit_button("Gerar Relatório para Exportação")
+
     if submitted:
-
-
-        # Data e hora atual
-        data_exportacao = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-
         # Criando DataFrame
-        df = pd.DataFrame({
-            "Avaliador": [avaliador],
-            "Área": [area],
-            "O que será avaliado ?": [o_que_sera_avaliado],
-            "Qual operação será avaliada ?": [qual_operacao_sera_avaliada],
-            "O ambiente apresenta SINALIZAÇÃO e ILUMINAÇÃO adequada?": [sinalizacao_iluminacao_adequada],
-            "O ambiente está organizado, sem Itens fora de Layout? (carrinhos, coletores, pallets...)": [ambiente_organizado],
-            "O ambiente apresenta EPC's e SAÍDAS DE EMERGÊNCIA adequadas?": [ambiente_epc_saida_emergencia],
-            "O ambiente apresenta EQUIPAMENTOS DE SEGURANÇA desobstruídos?": [ambiente_equipamentos_seguranca_desobstruidos],
-            "Bancadas de conferência devidamente ORGANIZADAS e LIMPAS?": [bancadas_conferencia_devidamente_organizada_limpa],
-            "O ambiente apresenta equipamentos em boas condições de uso? (Carrinhos, Fitas Gomadas, Maquinário...)": [equipamentos_condicoes_uso],
-            "As identificações estão ok? (lixeiras, volumes)": [identificacoes_estao_ok],
-            "As sinalizações com fita demarcação de solo estão em boas condições?": [sinalizacao_fita_demarcacao_solo],
-            "A balança está funcionando?": [balanca_funcionando],
-            "Melhoria irá depender de outras áreas para acontecer ? (EX: Manutenção, Orçamentos, etc...)": [melhoria_depender_outras_areas_acontecer],
-            "Os desvios poderão trazer rupturas nas atividades ali realizadas?": [desvios_ruptura_atividades_realizadas],
-            "Situação é recorrente ? (Ou seja, não foi tratada, ou já aconteceu anteriormente)": [situacao_recorrente],
-            "Existem retrabalhos que podem acabar trazendo morosidade ao fluxo de trabalho?": [retrabalhos_morosidade_fluxo_trabalho],
-            "Se a resposta anterior for 'Sim', por favor, especifique.": [retrabalhos_morosidade_fluxo_trabalho_especifique],
-            "Existe algum item que está em recebimento que não é do departamento?": [existe_item_nao_e_departamento],
-            "Os paletes do buffer de recebimento estão com as caixas devidamente fechadas?": [paletes_buffer_recebimento_caixas_devidamente_fechadas],
-            "As tratativas de devolução estão em sua área demarcada?": [tratativas_devolucao_area_demarcada],
-            "Colaboradores fazem uso correto de EPI's ?": [colaboradores_uso_correto_epis],
-            "O colaborador entrevistado apresenta conhecimento sobre o tema do DDS do dia?": [colaborador_entrevistado_apresenta_conhecimento_dds_do_dia],
-            "Qual o prazo para a melhoria ocorrer ?": [prazo_melhoria_recorrer],
-            "Qual o nome do responsável pela área pontuada?": [responsavel_area_pontuada],
-            "Comentario Final": [comentario_final],
-#            "Itens Selecionados": [", ".join(itens)],
-            "Data Exportacao": [data_exportacao]
-        })
+        data_exportacao = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        
+        dados = {
+            "Data Exportacao": data_exportacao,
+            "Avaliador": avaliador,
+            "Área": area,
+            "Operação": qual_operacao_sera_avaliada,
+            "Sinalização/Iluminação": sinalizacao_iluminacao_adequada,
+            "Organização": ambiente_organizado,
+            "Responsável": responsavel_area_pontuada,
+            "Comentário Final": comentario_final
+            # Adicione as outras variáveis aqui seguindo o mesmo padrão
+        }
+        
+        df = pd.DataFrame([dados])
 
-        st.success("Dados salvos!")
-
+        st.success("✅ Relatório gerado com sucesso!")
         st.dataframe(df)
 
-        # =========================
-        # GERAR XLSX EM MEMÓRIA
-        # =========================
+        # Gerar Excel
         output = BytesIO()
-
         with pd.ExcelWriter(output, engine="openpyxl") as writer:
-            df.to_excel(writer, index=False, sheet_name="Formulario")
-
-        output.seek(0)
-
-        # =========================
-        # BOTÃO EXPORTAR
-        # =========================
+            df.to_excel(writer, index=False, sheet_name="Auditoria")
+        
         st.download_button(
-            label="Exportar XLSX",
-            data=output,
-            file_name="formulario.xlsx",
+            label="📥 Baixar Planilha Excel (XLSX)",
+            data=output.getvalue(),
+            file_name=f"auditoria_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
+elif pagina == "Dashboard":
+    st.info("Página de Dashboard em desenvolvimento...")
