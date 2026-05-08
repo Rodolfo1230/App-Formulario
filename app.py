@@ -239,20 +239,11 @@ if pagina == "Recebimento":
             "Qual o prazo para a melhoria ocorrer ?"
         )
 
-        # Lista suspensa
-        responsavel_area_pontuada = st.selectbox(
-            "Qual o nome do responsável pela área pontuada?",
-            ["Selecione...",
-            "Jorge Santos",
-            "Luciano Souza",
-            "Eder Silva",
-            "Marcelo Marcondes",
-            "Elisvaldo Santos",
-            "Paulo Cristoveny",
-            "Marcio Xavier",
-            "Anibal Aguiar"
-            ]
+        # Campo de texto
+        responsavel_area_pontuada = st.text_area(
+            "Qual o nome do responsável pela área pontuada?"
         )
+        
 
         # Campo de texto
         comentario_final = st.text_area(
